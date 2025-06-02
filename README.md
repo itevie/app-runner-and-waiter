@@ -20,7 +20,7 @@ Create the KDE/whatever application menu with the arguments setup.
 
 `-d/--directory`: The directory to run the application in, by default it is the parent of `--app`, for example: `/home/username/Applications/SillyTavern`
 
-`-n/--no-open`: Don't open a URL once opened. Default false.
+`-n/--no-open`: Don't open a URL once opened. Default false. Used for using the app as a launcher ig.
 
 `-b/--base-url`: The base URL to open (hostname), default is `127.0.0.1`
 
@@ -30,8 +30,10 @@ All in all, for example, if you have Automatic1111 in `~/Applications`, the foll
 
 `app-runner-and-waiter -a /home/username/Applications/Automatic1111/webui.sh -p 7860`
 
-Now, if you wanted it in the KDE application menu:
+Proper examples you'd add in KDE application menu:
 
-`konsole -e bash -c app-runner-and-waiter -a /home/username/Applications/SillyTavern/start.sh -p 8000`
+`konsole -e bash -c 'app-runner-and-waiter -a /home/username/Applications/SillyTavern/start.sh -p 8000'`
+
+`konsole -e bash -c 'app-runner-and-waiter --app /home/username/Applications/Automatic1111/webui.sh --no-open --port 7860 -- --api'`
 
 And that should work.
