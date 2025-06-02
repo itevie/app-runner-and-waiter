@@ -84,6 +84,8 @@ fn main() {
                 .unwrap_or_else(|e| panic!("Failed to wait for app to close: {}", e));
 
             return;
+        } else {
+            std::thread::sleep(Duration::from_secs(1));
         }
     }
 
@@ -92,5 +94,9 @@ fn main() {
 
 fn is_port_open(host: &str, port: u16) -> bool {
     let address = format!("{}:{}", host, port);
-    TcpStream::connect_timeout(&address.parse().unwrap(), Duration::from_secs(1)).is_ok()
+    let result = TcpStream::connect_timeout(&address.parse().unwrap(), Duration::from_secs(1));
+    if let Err(ref err) = result {
+        println!("Waiting: failed to connect: {}", err);
+    }
+    result.is_ok()
 }
