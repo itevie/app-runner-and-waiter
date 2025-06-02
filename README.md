@@ -20,6 +20,10 @@ Create the KDE/whatever application menu with the arguments setup.
 
 `-d/--directory`: The directory to run the application in, by default it is the parent of `--app`, for example: `/home/username/Applications/SillyTavern`
 
+`-n/--no-open`: Don't open a URL once opened. Default false.
+
+`-b/--base-url`: The base URL to open (hostname), default is `127.0.0.1`
+
 `-h/--help`: The help
 
 All in all, for example, if you have Automatic1111 in `~/Applications`, the following will work:

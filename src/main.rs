@@ -39,6 +39,22 @@ struct Args {
         help = "How long it should wait for the application should open (seconds)"
     )]
     timeout: u8,
+
+    #[arg(
+        short,
+        long,
+        default_value = "false",
+        help = "Don't open a browser once port is open."
+    )]
+    no_open: bool,
+
+    #[arg(
+        short,
+        long,
+        default_value = "127.0.0.1",
+        help = "The base URL to open"
+    )]
+    base_url: String,
 }
 
 fn main() {
@@ -72,11 +88,13 @@ fn main() {
         .unwrap_or_else(|e| panic!("Failed to spawn process: {}", e));
 
     for _ in 0..args.timeout {
-        if is_port_open("127.0.0.1", args.port) {
-            Command::new(&args.opener)
-                .arg(format!("http://127.0.0.1:{}", args.port))
-                .spawn()
-                .unwrap_or_else(|e| panic!("Failed to open URL via {}: {}", args.opener, e));
+        if is_port_open(&args.base_url, args.port) {
+            if !args.no_open {
+                Command::new(&args.opener)
+                    .arg(format!("http://{}:{}", args.base_url, args.port))
+                    .spawn()
+                    .unwrap_or_else(|e| panic!("Failed to open URL via {}: {}", args.opener, e));
+            }
 
             println!("Sucessfully started {}!", args.app);
             command
